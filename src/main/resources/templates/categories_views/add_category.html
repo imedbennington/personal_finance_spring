@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main>
+
+    <div class="container">
+        <div class="row">
+            <div class="card">
+                <div class="col-md-3" ><!--style="display: none;" id="user-info"-->
+                    <h1>Welcome, <span th:text="${userName}">Guest</span>!</h1>
+                    <p>Your User ID is: <span th:text="${userId}">-</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container mt-5">
+        <div class="d-flex justify-content-center align-items-center min-vh-100">
+            <div class="card w-100" style="max-width: 600px;">
+                <div class="card-body p-4">
+                <h1>Add Category</h1>
+                    <!-- Display the success message if available -->
+                    <div th:if="${message}" class="alert alert-success">
+                        <p th:text="${message}"></p>
+                    </div>
+                    <!-- Display the error message if available -->
+                    <div th:if="${errorMessage}" class="alert alert-danger">
+                        <p th:text="${errorMessage}"></p>
+                    </div>
+                    <form th:action="@{/categories-add}" th:object="${category}" method="post">
+                        <div class="form-group">
+                            <label for="name">Category Name</label>
+                            <input type="text" id="name" name="name" class="form-control" th:field="*{name}">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" id="description" name="description" class="form-control" th:field="*{description}">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Add Category</button>
+                            <button type="submit" class="btn btn-danger">Cancel</button>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

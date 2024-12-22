@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main>
+    <div class="container mt-5">
+        <div class="d-flex justify-content-center align-items-center min-vh-100">
+            <div class="card w-100" style="max-width: 600px;">
+                <div class="card-body p-4">
+                    <h1>An error occurred!</h1>
+                    <!-- Display the error message -->
+                    <p th:text="${errorMessage}">Error message goes here</p>
+
+                    <!-- Display the stack trace -->
+                    <pre th:utext="${stackTrace}">Error stack trace goes here</pre>
+
+                    <p>Something went wrong. Please try again later.</p>
+                    <a href="/addBudget" class="btn btn-primary">Try Again</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

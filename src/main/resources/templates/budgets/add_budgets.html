@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main>
+
+    <div class="container">
+        <div class="row">
+            <div class="card">
+                <div class="col-md-3" ><!--style="display: none;" id="user-info"-->
+                    <h1>Welcome, <span th:text="${userName}">Guest</span>!</h1>
+                    <p>Your User ID is: <span th:text="${userId}">-</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="card">
+                <div class="col-md-3" ><!--style="display: none;" id="user-info">-->
+                    <h1>Welcome, <span th:text="${userName}">Guest</span>!</h1>
+                    <p>Your User ID is: <span th:text="${userId}">-</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="d-flex justify-content-center align-items-center min-vh-100">
+            <div class="card w-100" style="max-width: 600px;">
+                <div class="card-title">
+                    <h3>Add Budget</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form th:action="@{/budgets-add}" method="post">
+                        <div class="form-group">
+                            <label for="amount">Budget amount</label>
+                            <input type="number" class="form-control" id="amount" name="amount"/>
+                            <label for="description">Budget Description</label>
+                            <input type="text" class="form-control" id="description" name="description"/>
+                            <label for="startDate">Start date</label>
+                            <input type="date" class="form-control" id="startDate" name="startDate"/>
+                            <label for="endDate">End date</label>
+                            <input type="date" class="form-control" id="endDate" name="endDate"/>
+                            <label for="category">Category</label>
+                            <input type="hidden" name="userId" th:value="${userId}">
+
+                            <!-- Category select dropdown with onchange event -->
+                            <select class="form-control" name="categoryId" id="category" onchange="updateCategoryName()">
+                                <option th:each="category : ${categories}"
+                                        th:value="${category.id}"
+                                        th:text="${category.name}"
+                                        th:data-name="${category.name}">
+                                </option>
+                            </select>
+
+                            <!-- Hidden input to store category name -->
+                            <input type="text" id="categoryName" name="categoryName" readonly/>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Add Category</button>
+                            <button type="submit" class="btn btn-danger">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    function updateCategoryName() {
+        // Get the selected option from the dropdown
+        var selectElement = document.getElementById('category');
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+
+        // Get the category name from the data-name attribute
+        var categoryName = selectedOption.getAttribute('data-name');
+
+        // Set the category name in the hidden input field
+        document.getElementById('categoryName').value = categoryName;
+    }
+</script>
+
+</body>
+</html>

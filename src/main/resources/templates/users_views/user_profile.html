@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:display="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<main>
+
+
+    <!--<a href="/logout">Logout</a>-->
+    <div class="sidebar-wrapper" data-simplebar="true">
+        <div class="sidebar-header">
+            <div>
+                <img src="/assets/plugins/images/comptabilite.png" class="logo-icon" alt="logo icon">
+            </div>
+            <div>
+                <h4 class="logo-text">Perso finance</h4>
+            </div>
+            <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i>
+            </div>
+        </div>
+        <!--navigation-->
+        <ul class="metismenu" id="menu">
+            <li>
+                <a href="javascript:" class="has-arrow">
+                    <div class="parent-icon"><i class="fa-solid fa-piggy-bank"></i></div>
+                    <div class="menu-title">Accounts</div>
+                </a>
+                <ul>
+                    <li>
+                        <a href="@{/accounts/add}">
+                            <i class='bx bx-radio-circle'></i>Add Account
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class='bx bx-radio-circle'></i>Get Account
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class='bx bx-radio-circle'></i>Update Account
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:" class="has-arrow">
+                    <div class="parent-icon"><i class="fa-solid fa-piggy-bank"></i></div>
+                    <div class="menu-title">Categories</div>
+                </a>
+                <ul>
+                    <li>
+                        <a th:href="@{/get-add-category}">
+                            <i class='bx bx-radio-circle'></i>Add Category
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/get-categories}">
+                            <i class='bx bx-radio-circle'></i>View categories
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:" class="has-arrow">
+                    <div class="parent-icon"><i class="fa-solid fa-piggy-bank"></i></div>
+                    <div class="menu-title">My stats</div>
+                </a>
+                <ul>
+                    <li>
+                        <a href="">
+                            <i class='bx bx-radio-circle'></i>View stats
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:" class="has-arrow">
+                    <div class="parent-icon"><i class="fa-solid fa-piggy-bank"></i></div>
+                    <div class="menu-title">Transactions</div>
+                </a>
+                <ul>
+                    <li>
+                        <a href="">
+                            <i class='bx bx-radio-circle'></i>Add Transactions
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class='bx bx-radio-circle'></i>View Transactions
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:" class="has-arrow">
+                    <div class="parent-icon"><i class="fa-solid fa-piggy-bank"></i></div>
+                    <div class="menu-title">Budgets</div>
+                </a>
+                <ul>
+                    <li>
+                        <a th:href="@{/get-add-budgets}">
+                            <i class='bx bx-radio-circle'></i>Add budget
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class='bx bx-radio-circle'></i>View budget
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-label">Pages</li>
+            <!-- Additional sections for transactions, budget, reports can be added here -->
+        </ul>
+
+        <!--end navigation-->
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="card">
+                <div class="col-md-3" style="display: none;" id="user-info">
+                    <h1>Welcome, <span th:text="${userName}">Guest</span>!</h1>
+                    <p>Your User ID is: <span th:text="${userId}">-</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

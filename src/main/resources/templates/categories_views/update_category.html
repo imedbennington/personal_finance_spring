@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main>
+  <div class="container mt-5">
+    <div class="d-flex justify-content-center align-items-center min-vh-100">
+      <div class="card w-100" style="max-width: 800px;">
+        <div class="card-body p-4">
+          <h3>Update Category</h3>
+          <form th:action="@{/categories/update}" method="post" th:object="${category}">
+            <input type="hidden" th:field="*{id}" /> <!-- Hidden field for category ID -->
+            <div class="form-group mb-3">
+              <label for="name">Category Name</label>
+              <input type="text" id="name" name="name" class="form-control" th:field="*{name}" />
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="description">Category Description</label>
+              <textarea id="description" name="description" class="form-control" th:field="*{description}"></textarea>
+            </div>
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Update Category</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>
