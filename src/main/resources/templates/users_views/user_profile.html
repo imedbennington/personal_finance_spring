@@ -107,7 +107,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a th:href="@{/budgets}">
                             <i class='bx bx-radio-circle'></i>View budget
                         </a>
                     </li>
@@ -123,9 +123,10 @@
     <div class="container">
         <div class="row">
             <div class="card">
-                <div class="col-md-3" style="display: none;" id="user-info">
-                    <h1>Welcome, <span th:text="${userName}">Guest</span>!</h1>
-                    <p>Your User ID is: <span th:text="${userId}">-</span></p>
+                <div class="col-md-3" >style="display: none;" id="user-info">
+                    <h1>Welcome, <span th:text="${loggedInUserName}"></span>!</h1>
+                    <p>User ID: <span th:text="${loggedInUserId}"></span></p>
+                    <p>Full Name: <span th:text="${user.firstName} + ' ' + ${user.lastName}"></span></p>
                 </div>
             </div>
         </div>

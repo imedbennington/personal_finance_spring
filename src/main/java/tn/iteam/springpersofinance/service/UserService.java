@@ -2,6 +2,7 @@ package tn.iteam.springpersofinance.service;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import tn.iteam.springpersofinance.dto.UserRegisterDto;
@@ -53,15 +54,22 @@ public class UserService {
         return user;
     }*/
 
-    public String login(@RequestParam String email, @RequestParam String password, HttpSession session) {
-        try {
-            User user = userRepository.findByemail(email);
-            session.setAttribute("loggedInUserName", user.getFirstName());
-            session.setAttribute("loggedInUserId", user.getId());
-            return "redirect:/get-user-profile"; // Redirect to the dashboard or home page
-        } catch (IllegalArgumentException ex) {
-            return "redirect:/login?error=true";
+    // Login method that handles authentication and session management
+    public String login(String email, String password, HttpSession session) {
+        // Fetch user from the database
+        User user = userRepository.findByemail(email);
+
+        // If no user is found or the password is incorrect, throw an exception
+        if (user == null || !user.getPassword().equals(password)) {
+            throw new IllegalArgumentException("Invalid email or password.");
         }
+
+        // Store user information in the session
+        session.setAttribute("loggedInUserName", user.getFirstName());
+        session.setAttribute("loggedInUserId", user.getId());
+
+        // Return the logged-in user's first name or any other data you want
+        return user.getFirstName();
     }
 
     @GetMapping("/logout")

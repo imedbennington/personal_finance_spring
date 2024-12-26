@@ -1,5 +1,6 @@
 package tn.iteam.springpersofinance.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,13 @@ public class BudgetController {
     }
 
     @GetMapping("/budgets")
-    public String getAllBudgets(Model model) {
+    public String getAllBudgets(HttpSession session, Model model) {
+        String loggedInUserName = (String) session.getAttribute("loggedInUserName");
+        Long loggedInUserId = (Long) session.getAttribute("loggedInUserId");
+
+        // Add the user info to the model
+        model.addAttribute("loggedInUserName", loggedInUserName);
+        model.addAttribute("loggedInUserId", loggedInUserId);
         model.addAttribute("budget", new Budget());
         model.addAttribute("budgets", budgetService.getAllBudgets()); // Make sure you have this method in your service
         model.addAttribute("content", "budgets/get_budgets");
@@ -41,12 +48,26 @@ public class BudgetController {
     }
 
     @GetMapping("/get-add-budgets")
-    public String get_add_budgets(Model model ) {
+    public String get_add_budgets(HttpSession session, Model model) {
+        String loggedInUserName = (String) session.getAttribute("loggedInUserName");
+        Long loggedInUserId = (Long) session.getAttribute("loggedInUserId");
+
+        // Add the user info to the model
+        model.addAttribute("loggedInUserName", loggedInUserName);
+        model.addAttribute("loggedInUserId", loggedInUserId);
+
+        // Fetch user details from the database
+        User user = userRepository.findById(loggedInUserId).orElse(null);
+        model.addAttribute("user", user);
+
+        // Add other attributes
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("budget", new Budget());
         model.addAttribute("content", "budgets/add_budgets");
+
         return "layouts/layouts";
     }
+
 @GetMapping("/error")
 public String error(Model model) {
     model.addAttribute("content", "errors/error");

@@ -10,20 +10,10 @@
     <div class="container">
         <div class="row">
             <div class="card">
-                <div class="col-md-3" ><!--style="display: none;" id="user-info"-->
-                    <h1>Welcome, <span th:text="${userName}">Guest</span>!</h1>
-                    <p>Your User ID is: <span th:text="${userId}">-</span></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="card">
-                <div class="col-md-3" ><!--style="display: none;" id="user-info">-->
-                    <h1>Welcome, <span th:text="${userName}">Guest</span>!</h1>
-                    <p>Your User ID is: <span th:text="${userId}">-</span></p>
+                <div class="col-md-3" >style="display: none;" id="user-info">
+                    <h1>Welcome, <span th:text="${loggedInUserName}"></span>!</h1>
+                    <p>User ID: <span th:text="${loggedInUserId}"></span></p>
+                    <p>Full Name: <span th:text="${user.firstName} + ' ' + ${user.lastName}"></span></p>
                 </div>
             </div>
         </div>
@@ -47,8 +37,7 @@
                             <label for="endDate">End date</label>
                             <input type="date" class="form-control" id="endDate" name="endDate"/>
                             <label for="category">Category</label>
-                            <input type="hidden" name="userId" th:value="${userId}">
-
+                            <input type="text" name="userId" th:value="${loggedInUserId}">
                             <!-- Category select dropdown with onchange event -->
                             <select class="form-control" name="categoryId" id="category" onchange="updateCategoryName()">
                                 <option th:each="category : ${categories}"
