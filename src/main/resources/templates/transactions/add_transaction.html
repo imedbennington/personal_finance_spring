@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<main>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="card">
+        <div class="card-header">
+          <h1>Welcome User ID: <span th:text="${loggedInUserId}"></span></h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="text-center">Add Transaction</h4>
+          </div>
+          <div class="card-body">
+            <form th:action="@{/transactions/add}" th:object="${transaction}" method="post">
+
+              <div class="mb-3">
+                <label for="type" class="form-label">Transaction Type</label>
+                <select class="form-select" id="type" name="type" th:value="${transaction.type}" required>
+                  <option value="INCOME">Income</option>
+                  <option value="EXPENSE">Expense</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="amount" class="form-label">Amount</label>
+                <input type="number" class="form-control" id="amount" name="amount" th:value="${transaction.amount}" required />
+              </div>
+
+              <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-select" id="category" name="categoryId" required>
+                  <option th:each="category : ${categories}"
+                          th:value="${category.id}"
+                          th:text="${category.name}"></option>
+                </select>
+              </div>
+
+
+              <div class="mb-3">
+                <label for="date" class="form-label">Transaction Date</label>
+                <input type="date" class="form-control" id="date" name="date" th:value="${transaction.date}" required />
+              </div>
+
+              <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" th:value="${transaction.description}"></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Add Transaction</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>

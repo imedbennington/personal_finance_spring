@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main>
+  <div class="container mt-5">
+    <div class="row justify-content-center full-height">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h4 class="text-center mb-0">Update Budget</h4>
+          </div>
+          <div class="card-body">
+            <form th:action="@{/budgets/update/{id}(id=${budget.id})}" th:object="${budget}" method="post">
+              <div class="form-group mb-3">
+                <label for="amount" class="form-label">Amount:</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="amount"
+                        name="amount"
+                        th:value="${budget.amount}"
+                        required
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label for="description" class="form-label">Description:</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="description"
+                        name="description"
+                        th:value="${budget.description}"
+                        required
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label for="startDate" class="form-label">Start Date:</label>
+                <input
+                        type="date"
+                        class="form-control"
+                        id="startDate"
+                        name="startDate"
+                        th:value="${budget.startDate}"
+                        required
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label for="endDate" class="form-label">End Date:</label>
+                <input
+                        type="date"
+                        class="form-control"
+                        id="endDate"
+                        name="endDate"
+                        th:value="${budget.endDate}"
+                        required
+                />
+              </div>
+             <!-- <div class="form-group mb-4">
+                <label for="category" class="form-label">Category:</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="category"
+                        name="category"
+                        th:value="${budget.category.name}"
+                        required
+                />
+              </div>-->
+              <label for="category">Category:</label>
+              <select class="form-control" name="categoryId" id="category" onchange="updateCategoryName()">
+                                <option th:each="category : ${categories}"
+                                        th:value="${category.id}"
+                                        th:text="${category.name}"
+                                        th:data-name="${category.name}">
+                                </option>
+                            </select>
+              <div th:if="${#fields.hasErrors('category.id')}" th:errors="*{category.id}"></div>
+              <button type="submit" class="btn btn-primary w-100">Update Budget</button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

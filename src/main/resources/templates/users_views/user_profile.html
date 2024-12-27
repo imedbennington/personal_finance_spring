@@ -1,27 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:display="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-
+    <title>Perso Finance Dashboard</title>
 </head>
 <body>
 <main>
-
-
-    <!--<a href="/logout">Logout</a>-->
     <div class="sidebar-wrapper" data-simplebar="true">
         <div class="sidebar-header">
             <div>
-                <img src="/assets/plugins/images/comptabilite.png" class="logo-icon" alt="logo icon">
+                <img th:src="@{/assets/plugins/images/comptabilite.png}" class="logo-icon" alt="logo icon">
             </div>
             <div>
-                <h4 class="logo-text">Perso finance</h4>
+                <h4 class="logo-text">Perso Finance</h4>
             </div>
-            <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i>
-            </div>
+            <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i></div>
         </div>
-        <!--navigation-->
+        <!-- Navigation -->
         <ul class="metismenu" id="menu">
             <li>
                 <a href="javascript:" class="has-arrow">
@@ -29,52 +24,8 @@
                     <div class="menu-title">Accounts</div>
                 </a>
                 <ul>
-                    <li>
-                        <a href="@{/accounts/add}">
-                            <i class='bx bx-radio-circle'></i>Add Account
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class='bx bx-radio-circle'></i>Get Account
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class='bx bx-radio-circle'></i>Update Account
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:" class="has-arrow">
-                    <div class="parent-icon"><i class="fa-solid fa-piggy-bank"></i></div>
-                    <div class="menu-title">Categories</div>
-                </a>
-                <ul>
-                    <li>
-                        <a th:href="@{/get-add-category}">
-                            <i class='bx bx-radio-circle'></i>Add Category
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{/get-categories}">
-                            <i class='bx bx-radio-circle'></i>View categories
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="javascript:" class="has-arrow">
-                    <div class="parent-icon"><i class="fa-solid fa-piggy-bank"></i></div>
-                    <div class="menu-title">My stats</div>
-                </a>
-                <ul>
-                    <li>
-                        <a href="">
-                            <i class='bx bx-radio-circle'></i>View stats
-                        </a>
-                    </li>
+                    <li><a th:href="@{/accounts/add}"><i class='bx bx-radio-circle'></i>Add Account</a></li>
+                    <li><a th:href="@{/accounts}"><i class='bx bx-radio-circle'></i>Get Account</a></li>
                 </ul>
             </li>
             <li>
@@ -83,16 +34,18 @@
                     <div class="menu-title">Transactions</div>
                 </a>
                 <ul>
-                    <li>
-                        <a href="">
-                            <i class='bx bx-radio-circle'></i>Add Transactions
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <i class='bx bx-radio-circle'></i>View Transactions
-                        </a>
-                    </li>
+                    <li><a th:href="@{/get-add-trans}"><i class='bx bx-radio-circle'></i>Add Transaction</a></li>
+                    <li><a th:href="@{/get-transactions}"><i class='bx bx-radio-circle'></i>Get Account</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:" class="has-arrow">
+                    <div class="parent-icon"><i class="fa-solid fa-piggy-bank"></i></div>
+                    <div class="menu-title">Categories</div>
+                </a>
+                <ul>
+                    <li><a th:href="@{/get-add-category}"><i class='bx bx-radio-circle'></i>Add Category</a></li>
+                    <li><a th:href="@{/get-categories}"><i class='bx bx-radio-circle'></i>View Categories</a></li>
                 </ul>
             </li>
             <li>
@@ -101,36 +54,32 @@
                     <div class="menu-title">Budgets</div>
                 </a>
                 <ul>
-                    <li>
-                        <a th:href="@{/get-add-budgets}">
-                            <i class='bx bx-radio-circle'></i>Add budget
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{/budgets}">
-                            <i class='bx bx-radio-circle'></i>View budget
-                        </a>
-                    </li>
+                    <li><a th:href="@{/get-add-budgets}"><i class='bx bx-radio-circle'></i>Add Budget</a></li>
+                    <li><a th:href="@{/budgets}"><i class='bx bx-radio-circle'></i>View Budget</a></li>
                 </ul>
+
             </li>
-            <li class="menu-label">Pages</li>
-            <!-- Additional sections for transactions, budget, reports can be added here -->
         </ul>
-
-        <!--end navigation-->
     </div>
-
-    <div class="container">
+    <div class="container mt-5">
         <div class="row">
             <div class="card">
-                <div class="col-md-3" >style="display: none;" id="user-info">
-                    <h1>Welcome, <span th:text="${loggedInUserName}"></span>!</h1>
-                    <p>User ID: <span th:text="${loggedInUserId}"></span></p>
-                    <p>Full Name: <span th:text="${user.firstName} + ' ' + ${user.lastName}"></span></p>
+                <div class="card-header">
+                    <h1>Welcome User ID: <span th:text="${loggedInUserId}"></span></h1>
                 </div>
             </div>
         </div>
     </div>
+
+<!--    <div class="container">
+        <div class="row">
+            <div class="col-md-3" th:if="${user != null}" id="user-info">
+                <h1>Welcome, <span th:text="${loggedInUserName}"></span>!</h1>
+                <p>User ID: <span th:text="${loggedInUserId}"></span></p>
+                <p>Full Name: <span th:text="${user.firstName} + ' ' + ${user.lastName}"></span></p>
+            </div>
+        </div>
+    </div>-->
 </main>
 </body>
 </html>

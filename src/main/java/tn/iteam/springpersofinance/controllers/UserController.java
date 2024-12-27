@@ -88,17 +88,35 @@ public String getUserProfile(HttpSession session, Model model) {
     String loggedInUserName = (String) session.getAttribute("loggedInUserName");
     Long loggedInUserId = (Long) session.getAttribute("loggedInUserId");
 
+    // Check if the user is logged in (loggedInUserId should not be null)
+    if (loggedInUserId == null) {
+        // If no user ID is found in session, redirect to login page (or handle it appropriately)
+        return "redirect:/login";
+    }
+
     // Add the user info to the model
     model.addAttribute("loggedInUserName", loggedInUserName);
     model.addAttribute("loggedInUserId", loggedInUserId);
-    model.addAttribute("content", "users_views/user_profile");
 
-    // You can also fetch other user data from the database if needed
+    // Fetch the user from the database using the userId stored in the session
     User user = userRepository.findById(loggedInUserId).orElse(null);
+
+    // If the user is not found in the database, handle it (redirect to an error page or show a message)
+    if (user == null) {
+        model.addAttribute("error", "User not found!");
+        return "errorPage";  // Redirect to an error page or display an error message
+    }
+
+    // Add the fetched user to the model
     model.addAttribute("user", user);
 
-    return "layouts/layouts"; // Return the profile view
+    // Add content attribute to indicate the view to be rendered
+    model.addAttribute("content", "users_views/user_profile");
+
+    // Return the profile view
+    return "layouts/layouts"; // Return the layout template
 }
+
 
     @PostMapping("/register")
    public String registerUser(@ModelAttribute UserRegisterDto userDTO, Model model) {

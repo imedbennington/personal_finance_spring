@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.iteam.springpersofinance.entities.Budget;
 import tn.iteam.springpersofinance.entities.Category;
+import tn.iteam.springpersofinance.entities.User;
 import tn.iteam.springpersofinance.exceptions.BudgetNotFoundException;
 import tn.iteam.springpersofinance.interfaces.BudgetInterface;
 import tn.iteam.springpersofinance.repositories.BudgetRepository;
+import tn.iteam.springpersofinance.repositories.UserRepository;
 
 import java.util.List;
 @Service
@@ -14,10 +16,13 @@ public class BudgetService implements BudgetInterface {
 
     private final BudgetRepository budgetRepository;
     private final CategoryService categoryService;
+    private final UserRepository userRepository;
+
     @Autowired
-    public BudgetService(BudgetRepository budgetRepository, CategoryService categoryService) {
+    public BudgetService(BudgetRepository budgetRepository, CategoryService categoryService, UserRepository userRepository) {
         this.budgetRepository = budgetRepository;
         this.categoryService = categoryService;
+        this.userRepository = userRepository;
     }
 
 
@@ -26,7 +31,6 @@ public class BudgetService implements BudgetInterface {
         try {
             // Fetch the category by its ID
             Category category = categoryService.getCategoryById(categoryId);
-
             // If the category is not found, throw an exception
             if (category == null) {
                 throw new RuntimeException("Category not found for ID: " + categoryId);
@@ -44,7 +48,7 @@ public class BudgetService implements BudgetInterface {
     }
 
 
-    @Override
+   /* @Override
     public void updateBudget(Budget budget, Long id) {
         try {
             Budget existingBudget = budgetRepository.findById(id)
@@ -58,7 +62,35 @@ public class BudgetService implements BudgetInterface {
         } catch (Exception e) {
             throw new RuntimeException("Failed to update budget: " + e.getMessage());
         }
+    }*/
+
+    @Override
+    public void updateBudget(Budget budget, Long id) {
+        try {
+            Budget existingBudget = budgetRepository.findById(id)
+                    .orElseThrow(() -> new BudgetNotFoundException("Budget with ID " + id + " not found."));
+
+            existingBudget.setAmount(budget.getAmount());
+            existingBudget.setDescription(budget.getDescription());
+            existingBudget.setStartDate(budget.getStartDate());
+            existingBudget.setEndDate(budget.getEndDate());
+
+            // Fetch and set related category
+            Category category = categoryService.getCategoryById(budget.getCategory().getId());
+                    //.orElseThrow(() -> new RuntimeException("Category not found."));
+            existingBudget.setCategory(category);
+
+            // Fetch and set related user (if required)
+            User user = userRepository.findById(budget.getUser().getId())
+                    .orElseThrow(() -> new RuntimeException("User not found."));
+            existingBudget.setUser(user);
+
+            budgetRepository.save(existingBudget);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update budget: " + e.getMessage());
+        }
     }
+
 
     @Override
     public void deleteBudget(Budget budget, Long id) {
