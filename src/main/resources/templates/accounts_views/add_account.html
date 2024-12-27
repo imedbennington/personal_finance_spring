@@ -1,10 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Create Account</title>
 </head>
 <body>
 
+<div class="container mt-5">
+    <div class="row">
+        <div class="card">
+            <div class="card-header">
+                <h1>Welcome User ID: <span th:text="${loggedInUserId}"></span></h1>
+            </div>
+        </div>
+    </div>
+</div>
+<h1>Create a New Account</h1>
+
+<!-- Display Success Message -->
+<div th:if="${success}" style="color: green;">
+    <p th:text="${success}"></p>
+</div>
+
+<!-- Display Error Message -->
+<div th:if="${error}" style="color: red;">
+    <p th:text="${error}"></p>
+</div>
+<div class="container mt-5">
+    <div class="d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card w-100" style="max-width: 600px;">
+            <div class="card-title">
+                <h3>Add Budget</h3>
+            </div>
+            <div class="card-body p-4">
+                <form th:action="@{/create-account}" method="post">
+                    <div class="form-group">
+                        <label for="balance">Amount</label>
+                        <input type="number" class="form-control" id="balance" name="balance"/>
+                        <label for="bank_name">Bank</label>
+                        <input type="text" class="form-control" id="bank_name" name="bank_name"/>
+                        <label for="RIB">RIB</label>
+                        <input type="number" class="form-control" id="RIB" name="RIB"/>
+                        <label for="IBAN">IBAN</label>
+                        <input type="number" class="form-control" id="IBAN" name="IBAN"/>
+                        <input type="text" name="userId" th:value="${loggedInUserId}">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Add account</button>
+                        <button type="submit" class="btn btn-danger">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
