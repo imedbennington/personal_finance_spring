@@ -38,7 +38,11 @@ public class AccountsService implements AccountInterface {
 
     @Override
     public Account getAccount(Long id) throws AccountsException {
-        return null;
+        try{
+            return accountRepository.findById(id).get();
+        } catch (Exception e) {
+            throw new AccountsException(e.getMessage());
+        }
     }
 
     @Override

@@ -1,14 +1,24 @@
 package tn.iteam.springpersofinance.service;
 
 import jakarta.servlet.http.HttpSession;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import tn.iteam.springpersofinance.dto.UserRegisterDto;
 import tn.iteam.springpersofinance.entities.User;
 import tn.iteam.springpersofinance.exceptions.DuplicateEmailException;
 import tn.iteam.springpersofinance.repositories.UserRepository;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.UUID;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -16,14 +26,31 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User register(UserRegisterDto userDTO) throws DuplicateEmailException {
+    public User register(UserRegisterDto userDTO) throws DuplicateEmailException, IOException {
         // Check if a user with the provided email already exists
         if (userRepository.findByemail(userDTO.getEmail()) != null) {
             throw new DuplicateEmailException("Email " + userDTO.getEmail() + " is already in use.");
         }
 
-        // Create a new user and set the properties
+        // Initialize a new user
         User user = new User();
+
+        // Handle profile picture upload
+/*        if (userDTO.getProfilePicture() != null && !userDTO.getProfilePicture().isEmpty()) {
+            MultipartFile profilePicture = userDTO.getProfilePicture();
+            String fileName = UUID.randomUUID() + "_" + profilePicture.getOriginalFilename();
+            Path uploadPath = Paths.get("src/main/resources/static/uploads/profile_pictures");
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath); // Create directories if they don't exist
+            }
+            Files.copy(profilePicture.getInputStream(), uploadPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+
+            // Save relative file path in the user object
+            //user.setProfilePicture("profile-pictures/" + fileName);
+            user.setProfile_picture(fileName);
+        }*/
+
+        // Set other user properties
         user.setUsername(userDTO.getUsername());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
@@ -40,19 +67,6 @@ public class UserService {
         return userRepository.save(user);
     }
 
-
-    /*public User login(String email, String password, HttpSession session) {
-        User user = userRepository.findByemail(email);
-        if (user == null || !user.getPassword().equals(password)) {
-            throw new IllegalArgumentException("Invalid email or password.");
-        }
-
-        // Store user info in the session
-        session.setAttribute("userId", user.getId());
-        session.setAttribute("userName", user.getFirstName() + " " + user.getLastName());
-
-        return user;
-    }*/
 
     // Login method that handles authentication and session management
     public String login(String email, String password, HttpSession session) {
@@ -77,5 +91,6 @@ public class UserService {
         session.invalidate(); // Clear the session
         return "redirect:/login";
     }
+
 
 }

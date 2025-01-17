@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container mt-5">
+    <div class="d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card w-100" style="max-width: 800px;">
+            <div class="card-body p-4">
+                <h1>Budgets</h1>
+
+                <!-- Table to display categories -->
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="trans : ${transactions}">
+                        <td th:text="${trans.id}">ID</td>
+                        <td th:text="${trans.type}">Type</td>
+                        <td th:text="${trans.date}">Date</td>
+                        <td th:text="${trans.amount}">Amount</td>
+                        <td th:text="${trans.description}">Description</td>
+
+                        <!-- Actions Column -->
+                        <td>
+                            <!-- Update Button -->
+                            <a th:href="@{/transaction/edit/{id}(id=${trans.id})}" class="btn btn-warning btn-sm">Update</a>
+
+                            <!-- Delete Button (Form) -->
+                            <form th:action="@{/delete-transaction/{id}(id=${trans.id})}" method="post" style="display:inline;">
+                                <input type="hidden" name="transactionId" th:value="${trans.id}" />
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this transaction?');">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

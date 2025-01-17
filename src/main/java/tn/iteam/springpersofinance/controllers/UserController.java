@@ -29,6 +29,12 @@ public class UserController {
         return "layouts/layouts";
     }
 
+    @GetMapping("/get-home-page")
+    public String home(Model model) {
+        model.addAttribute("content", "users_views/index");
+        return "layouts/layouts";
+    }
+
     @PostMapping("/login")
     public String login(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
         try {
@@ -45,43 +51,12 @@ public class UserController {
             return "redirect:/get-login-page"; // Redirect back to the login page with an error
         }
     }
-/*    @GetMapping("get-register-page")
-    public String register(Model model) {
-        model.addAttribute("content", "content");
-        return "users_views/register";
-    }*/
 @GetMapping("/get-register-page")
 public String showRegisterForm(Model model) {
     // Set the content for the main section dynamically
     model.addAttribute("content", "users_views/register");
     return "layouts/layouts"; // Return the layout template
 }
-
-    /*@GetMapping("/get-user-profile")
-    public String showUserprofile(Model model) {
-
-        // Set the content for the main section dynamically
-        model.addAttribute("content", "users_views/user_profile");
-        return "layouts/layouts"; // Return the layout template
-    }*/
-
-/*    @GetMapping("/get-user-profile")
-    public String getUserProfile(HttpSession session, Model model) {
-        // Retrieve the logged-in user's info from the session
-        String loggedInUserName = (String) session.getAttribute("loggedInUserName");
-        Long loggedInUserId = (Long) session.getAttribute("loggedInUserId");
-
-        // Add the user info to the model
-        model.addAttribute("loggedInUserName", loggedInUserName);
-        model.addAttribute("loggedInUserId", loggedInUserId);
-        model.addAttribute("content", "users_views/user_profile");
-
-        // You can also fetch other user data from the database if needed
-        User user = userRepository.findById(loggedInUserId).orElse(null);
-        model.addAttribute("user", user);
-
-        return "layouts/layouts"; // Return the profile view
-    }*/
 @GetMapping("/get-user-profile")
 public String getUserProfile(HttpSession session, Model model) {
     // Retrieve the logged-in user's info from the session
@@ -91,7 +66,7 @@ public String getUserProfile(HttpSession session, Model model) {
     // Check if the user is logged in (loggedInUserId should not be null)
     if (loggedInUserId == null) {
         // If no user ID is found in session, redirect to login page (or handle it appropriately)
-        return "redirect:/login";
+        return "redirect:/get-login-page";
     }
 
     // Add the user info to the model
@@ -133,23 +108,5 @@ public String getUserProfile(HttpSession session, Model model) {
         }
     }
 
-/*public ResponseEntity<?> registerUser(@RequestBody UserRegisterDto userDTO) {
-    try {
-        User user = userService.register(userDTO);
-        return ResponseEntity.ok("Registration successful!");
-    } catch (IllegalArgumentException e) {
-        throw e; // This will be caught by the exception handler
-    }
-}
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex) {
-        return ResponseEntity.badRequest().body(ex.getMessage());
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleGeneralException(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("There was an error processing your request. Please try again.");
-    }*/
 }

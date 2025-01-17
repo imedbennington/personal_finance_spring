@@ -48,6 +48,15 @@
                 </select>
               </div>
 
+              <div class="mb-3">
+                <label for="category" class="form-label">Account</label>
+                <select class="form-select" id="category" name="categoryId" required>
+                  <option th:each="account : ${accounts}"
+                          th:value="${account.id}"
+                          th:text="${account.bank_name}"></option>
+                </select>
+              </div>
+
 
               <div class="mb-3">
                 <label for="date" class="form-label">Transaction Date</label>

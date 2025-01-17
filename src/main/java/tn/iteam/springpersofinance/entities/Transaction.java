@@ -35,6 +35,14 @@ public class Transaction {
     @Column(length = 500)
     private String description;
 
+
+    @ManyToOne
+    private Account sourceAccount;
+
+    @ManyToOne
+    private Account targetAccount;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

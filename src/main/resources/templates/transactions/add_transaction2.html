@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="card">
+      <div class="card-header">
+        <h1>Welcome User ID: <span th:text="${loggedInUserId}"></span></h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container mt-5">
+  <div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card w-100" style="max-width: 600px;">
+      <div class="card-title">
+        <h3>Add Budget</h3>
+      </div>
+<main>
+  <form th:action="@{/transactions/add}" th:object="${transaction}" method="post">
+    <input type="hidden" name="userId" th:value="${loggedInUserId}" />
+    <div class="mb-3">
+      <label for="type" class="form-label">Transaction Type</label>
+      <select class="form-select" id="type" name="type" th:value="${transaction.type}" required>
+        <option value="INCOME">Income</option>
+        <option value="EXPENSE">Expense</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="amount" class="form-label">Amount</label>
+      <input type="number" class="form-control" id="amount" name="amount" th:value="${transaction.amount}" required />
+    </div>
+
+    <div class="mb-3">
+      <label for="category" class="form-label">Category</label>
+      <select class="form-select" id="category" name="categoryId" required onchange="updateCategoryName()">
+        <option value="" disabled selected>Select a category</option>
+        <option th:each="category : ${categories}"
+                th:value="${category.id}"
+                th:text="${category.name}"></option>
+      </select>
+      <input type="text" id="categoryName" name="categoryName" />
+    </div>
+
+    <select class="form-select" id="sourceAccount" name="sourceAccountId" required>
+      <option value="" disabled selected>Select a source account</option>
+      <option th:each="account : ${accounts}"
+              th:value="${account.id}"
+              th:text="${account.bank_name + ' (ID: ' + account.id + ')'}">
+      </option>
+    </select>
+
+
+    <div class="mb-3">
+      <label for="targetAccount" class="form-label">Target Account</label>
+      <select class="form-select" id="targetAccount" name="targetAccountId">
+        <option th:each="account : ${accounts}"
+                th:value="${account.id}"
+                th:text="${account.bank_name}"></option>
+      </select>
+    </div>
+
+
+
+    <div class="mb-3">
+      <label for="date" class="form-label">Transaction Date</label>
+      <input type="date" class="form-control" id="date" name="date" th:value="${transaction.date}" required />
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea class="form-control" id="description" name="description" th:value="${transaction.description}"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Transaction</button>
+  </form>
+  <script>
+    function updateCategoryName() {
+      // Get the selected option text from the dropdown
+      const categoryDropdown = document.getElementById('category');
+      const selectedCategoryName = categoryDropdown.options[categoryDropdown.selectedIndex].text;
+
+      // Set the value of the hidden input
+      document.getElementById('categoryName').value = selectedCategoryName;
+    }
+  </script>
+</main>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

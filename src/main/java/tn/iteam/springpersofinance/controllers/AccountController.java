@@ -52,7 +52,7 @@ public class AccountController {
             accountsService.createAccount(account);
 
             // Add attributes for the view
-            model.addAttribute("account", account);
+            model.addAttribute("accounts", account);
             model.addAttribute("content", "accounts_views/view_accounts");
 
         } catch (Exception e) {
@@ -66,7 +66,7 @@ public class AccountController {
     }
 
 
-    @GetMapping("get-accounts")
+    @GetMapping("/get-accounts")
     public String getAccounts(HttpSession session, Model model) {
         model.addAttribute("accounts", accountsService.getAccounts());
         model.addAttribute("content", "accounts_views/view_accounts");

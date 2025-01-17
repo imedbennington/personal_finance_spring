@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<title th:replace="fragments/title :: title">Register - Rocker</title>-->
+</head>
+<body>
+<main>
+    <div class="page-wrapper">
+        <div class="page-content d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+            <div class="row row-cols-1">
+                <div class="col d-flex">
+                    <div class="card radius-10 w-100" style="max-width: auto;">
+                        <img th:src="@{/assets/images/gallery/06.png}" class="card-img-top" alt="Image">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <h3>Track Your Spending</h3>
+                                <p>Stay on top of your expenses with our intuitive tools.</p>
+                            </h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Set Savings Goals</li>
+                            <li class="list-group-item">Financial Advice</li>
+                        </ul>
+                        <div class="card-body">
+                            <a th:href="@{/get-register-page}" class="btn btn-primary">REGISTER NOW</a>
+                        </div>
+                        <div class="card-body">
+                            <a th:href="@{/get-login-page}" class="btn btn-primary">LOGIN</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>

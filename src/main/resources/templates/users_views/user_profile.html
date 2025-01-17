@@ -25,7 +25,7 @@
                 </a>
                 <ul>
                     <li><a th:href="@{/get-create-account}"><i class='bx bx-radio-circle'></i>Add Account</a></li>
-                    <li><a th:href="@{/accounts}"><i class='bx bx-radio-circle'></i>Get Account</a></li>
+                    <li><a th:href="@{/get-accounts}"><i class='bx bx-radio-circle'></i>Get Account</a></li>
                 </ul>
             </li>
             <li>
@@ -34,8 +34,8 @@
                     <div class="menu-title">Transactions</div>
                 </a>
                 <ul>
-                    <li><a th:href="@{/get-add-trans}"><i class='bx bx-radio-circle'></i>Add Transaction</a></li>
-                    <li><a th:href="@{/get-transactions}"><i class='bx bx-radio-circle'></i>Get Account</a></li>
+                    <li><a th:href="@{/get-add-trans}"><i class='bx bx-radio-circle'></i>Add Transactions</a></li>
+                    <li><a th:href="@{/get-transactions}"><i class='bx bx-radio-circle'></i>Get Transactions</a></li>
                 </ul>
             </li>
             <li>
@@ -61,7 +61,7 @@
             </li>
         </ul>
     </div>
-    <div class="container mt-5">
+    <div class="container mt-5 d-none">
         <div class="row">
             <div class="card">
                 <div class="card-header">
@@ -70,16 +70,114 @@
             </div>
         </div>
     </div>
-
-<!--    <div class="container">
-        <div class="row">
-            <div class="col-md-3" th:if="${user != null}" id="user-info">
-                <h1>Welcome, <span th:text="${loggedInUserName}"></span>!</h1>
-                <p>User ID: <span th:text="${loggedInUserId}"></span></p>
-                <p>Full Name: <span th:text="${user.firstName} + ' ' + ${user.lastName}"></span></p>
+    <div class="page-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
+            <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+                <div class="breadcrumb-title pe-3">User Profile</div>
+                <div class="ps-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 p-0">
+                            <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">User Profilep</li>
+                        </ol>
+                    </nav>
+                </div>
             </div>
+
+            <div class="container">
+                <div class="main-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card">
+                                <!--<div class="card-body">
+                                    <div class="d-flex flex-column align-items-center text-center">
+                                        <img th:src="${#strings.isEmpty(loggedInUser.profilePicture) ? '/assets/images/avatars/avatar-2.png' : '/storage/' + loggedInUser.profilePicture}"
+                                             alt="Admin" class="bg-primary" width="300" height="300">
+                                    </div>
+                                    <hr class="my-4" />
+                                </div>-->
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <!--<form class="row g-3" th:action="@{/update_account/{id}(id=${usr.id})}" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="_method" value="PUT"> &lt;!&ndash; Add the PUT method for updates &ndash;&gt;
+                                        <div class="col-md-6">
+                                            <label for="input1" class="form-label">First Name</label>
+                                            <input type="text" class="form-control" id="input1" placeholder="First Name" name="name" th:value="${usr.name}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="input2" class="form-label">Last Name</label>
+                                            <input type="text" class="form-control" id="input2" placeholder="Last Name" name="lastName" th:value="${usr.lastName}">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="input3" class="form-label">Phone</label>
+                                            <input type="text" class="form-control" id="input3" placeholder="Phone" name="phone" th:value="${usr.phone}">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="input4" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="input4" placeholder="Email" name="email" th:value="${usr.email}">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="input5" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="input5" placeholder="Password" name="password">
+                                            <small class="form-text text-muted">Leave blank to keep the current password.</small>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="dateofB" class="form-label">DOB</label>
+                                            <input id="dateofB" type="date" class="form-control datepicker" name="dob" th:value="${usr.dob}">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="input7" class="form-label">Country</label>
+                                            <select id="input7" class="form-select" name="country">
+                                                <option th:text="'Choose...'" th:selected="${#strings.isEmpty(usr.country)}"></option>
+                                                <option th:value="'Tunisie'" th:selected="${usr.country == 'Tunisie'}">Tunisie</option>
+                                                <option th:value="'Italy'" th:selected="${usr.country == 'Italy'}">Italy</option>
+                                                <option th:value="'USA'" th:selected="${usr.country == 'USA'}">USA</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="input8" class="form-label">City</label>
+                                            <input type="text" class="form-control" id="input8" placeholder="City" name="city" th:value="${usr.city}">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="input10" class="form-label">Zip</label>
+                                            <input type="text" class="form-control" id="input10" placeholder="Zip" name="zip" th:value="${usr.zip}">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="input11" class="form-label">Address</label>
+                                            <textarea class="form-control" id="input11" placeholder="Address ..." rows="3" name="address" th:text="${usr.address}"></textarea>
+                                        </div>
+&lt;!&ndash;                                        <div class="col-md-12 mt-3">
+                                            <label for="profilePicture" class="form-label">Profile Picture</label>
+                                            <div class="input-group">
+                                                <input type="file" class="form-control" id="profilePicture" name="profilePicture" accept="image/jpeg, image/png, image/jpg, image/gif">
+                                            </div>
+                                            <img th:if="${usr.profilePicture != null}" th:src="@{'/storage/' + usr.profilePicture}"
+                                                 alt="Current Profile Picture" class="img-thumbnail mt-2" width="150">
+                                        </div>&ndash;&gt;
+                                        <div class="col-md-12">
+                                            <div class="d-md-flex d-grid align-items-center gap-3">
+                                                <button type="submit" class="btn btn-primary px-4">Update</button>
+                                                <button type="reset" class="btn btn-light px-4">Reset</button>
+                                            </div>
+                                        </div>
+                                    </form>-->
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </div>-->
 </main>
 </body>
 </html>

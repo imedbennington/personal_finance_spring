@@ -6,7 +6,7 @@ import tn.iteam.springpersofinance.exceptions.TransEception;
 import java.util.List;
 
 public interface TransactionInterface {
-    void addTransaction(Transaction transaction, String categoryname, Long categoryid) throws TransEception;
+    void addTransaction(Transaction transaction, String categoryname, Long categoryid, Long source_account, Long dest_account) throws TransEception;
     void deleteTransaction(Transaction transaction, Long id);
     void updateTransaction(Transaction transaction, Long id);
     Transaction getTransaction(Long id);

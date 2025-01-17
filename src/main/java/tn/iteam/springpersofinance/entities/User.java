@@ -42,6 +42,9 @@ public class User {
     @Column(nullable = false, name = "password")
     private String password;
 
+    @Column(name = "profile_picture", nullable = true)
+    private String profile_picture;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Budget> budgets = new ArrayList<>();
 
